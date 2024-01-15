@@ -1,0 +1,7 @@
+{
+  "root": true,
+  "extends": [
+    "@fellipeutaka/eslint-config/next",
+    "@fellipeutaka/eslint-config/tailwind"
+  ]
+}
