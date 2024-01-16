@@ -17,7 +17,7 @@ export const TextFieldStyles = {
   Input: tv({
     base: [
       "peer block h-10 w-full appearance-none bg-transparent text-sm outline-none transition",
-      "placeholder:text-muted-foreground",
+      "placeholder:select-none placeholder:text-muted-foreground",
       "disabled:cursor-not-allowed disabled:opacity-50",
     ],
   }),

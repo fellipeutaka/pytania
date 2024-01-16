@@ -149,4 +149,5 @@ export const Dialog = Object.assign(DialogRoot, {
   Description: DialogDescription,
   Header: DialogHeader,
   Footer: DialogFooter,
+  Close: DialogClose,
 });

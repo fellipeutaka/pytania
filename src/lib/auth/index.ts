@@ -27,6 +27,7 @@ export const {
       return session;
     },
   },
+  debug: process.env.NODE_ENV !== "production",
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,

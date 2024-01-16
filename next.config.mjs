@@ -1,3 +1,4 @@
+import withMDX from "@next/mdx";
 import million from "million/compiler";
 await import("./src/lib/env/index.mjs");
 
@@ -11,6 +12,7 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  pageExtensions: ["mdx", "ts", "tsx"],
 };
 
-export default million.next(config, { auto: { rsc: true } });
+export default withMDX()(million.next(config, { auto: { rsc: true } }));

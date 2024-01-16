@@ -9,7 +9,7 @@ export default function Page() {
     <main className="container space-y-6 pb-12 pt-16 text-center lg:py-28">
       <h1 className="text-balance text-4xl font-extrabold tracking-tight motion-safe:animate-fade-up sm:text-5xl md:text-6xl lg:text-7xl">
         <span className="bg-gradient-to-r from-cyan-12 to-cyan-6 bg-clip-text text-transparent">
-          Unlock
+          Unlock{" "}
         </span>
         Your Mind's Potential
       </h1>

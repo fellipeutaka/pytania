@@ -9,8 +9,8 @@ export default async function Page() {
   const data = await db.select().from(quizzes);
 
   return (
-    <main>
-      <h1>Quiz page</h1>
+    <main className="container pb-12 pt-16 lg:py-28">
+      <h1 className="mb-4 text-4xl font-bold">Quiz page</h1>
       <div className="grid">
         {data.map((quiz) => (
           <Link href={`/quiz/${quiz.id}`} key={quiz.id}>

@@ -16,11 +16,13 @@ export function Profile({ session }: ProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenu.Trigger asChild>
-        <Avatar>
-          <Avatar.Image src={session.user.image || ""} />
-          <Avatar.Fallback>
-            <Icons.User className="size-4" />
-          </Avatar.Fallback>
+        <Avatar asChild>
+          <button className="outline-none ring-offset-background transition focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <Avatar.Image src={session.user.image || ""} />
+            <Avatar.Fallback>
+              <Icons.User className="size-4" />
+            </Avatar.Fallback>
+          </button>
         </Avatar>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-56" align="end">

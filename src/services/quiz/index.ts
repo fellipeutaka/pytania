@@ -12,44 +12,42 @@ export async function createQuiz({
   description,
   creatorId,
 }: CreateQuizProps) {
-  await db.transaction(async (tx) => {
-    const [quiz] = await tx
-      .insert(quizzes)
-      .values({
-        name,
-        description,
-        creatorId,
-      })
-      .returning();
+  const [quiz] = await db
+    .insert(quizzes)
+    .values({
+      name,
+      description,
+      creatorId,
+    })
+    .returning();
 
-    const questionId = randomUUID();
-    const correctAnswerId = randomUUID();
+  const questionId = randomUUID();
+  const correctAnswerId = randomUUID();
 
-    await tx.insert(questions).values({
-      id: questionId,
-      quizId: quiz.id,
-      text: "What is the capital of France?",
-      correctAnswerId: correctAnswerId,
-    });
-
-    await tx.insert(answers).values([
-      {
-        id: correctAnswerId,
-        questionId,
-        text: "Paris",
-      },
-      {
-        questionId,
-        text: "London",
-      },
-      {
-        questionId,
-        text: "Berlin",
-      },
-      {
-        questionId,
-        text: "Rome",
-      },
-    ]);
+  await db.insert(questions).values({
+    id: questionId,
+    quizId: quiz.id,
+    text: "What is the capital of France?",
+    correctAnswerId: correctAnswerId,
   });
+
+  await db.insert(answers).values([
+    {
+      id: correctAnswerId,
+      questionId,
+      text: "Paris",
+    },
+    {
+      questionId,
+      text: "London",
+    },
+    {
+      questionId,
+      text: "Berlin",
+    },
+    {
+      questionId,
+      text: "Rome",
+    },
+  ]);
 }

@@ -1,4 +1,5 @@
 import { cyanA, cyanDarkA } from "@radix-ui/colors";
+import typography from "@tailwindcss/typography";
 import { createShadcnPreset, overrideShadcnTheme } from "mizuhara/plugins";
 import type { Config } from "tailwindcss";
 import { createPlugin } from "windy-radix-palette";
@@ -10,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  plugins: [colors.plugin],
+  plugins: [colors.plugin, typography],
   presets: [
     createShadcnPreset({
       theme: overrideShadcnTheme({

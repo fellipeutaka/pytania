@@ -8,17 +8,17 @@ https://quiz.rocketseat.com.br/quizzes/react
 - [x] Create account with Discord
 - [x] Create account with Google
 - [x] Create account with GitHub
-- [] Create account with Magic Link
-- [] Create Quiz
-- [] Update Quiz
-- [] Delete Quiz
-- [] Play Quiz
-- [] Like Quiz
-- [] Dislike Quiz
-- [] Comment Quiz
-- [] Refactor database calls
-- [] Create a seed script
-- [] OpenGraph Image
+- [ ] Create account with Magic Link
+- [ ] Create Quiz
+- [ ] Update Quiz
+- [ ] Delete Quiz
+- [ ] Play Quiz
+- [ ] Like Quiz
+- [ ] Dislike Quiz
+- [ ] Comment Quiz
+- [ ] Refactor database calls
+- [ ] Create a seed script
+- [ ] OpenGraph Image
 
 ## Overview
 

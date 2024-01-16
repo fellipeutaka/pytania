@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { z } from "zod";
 
 import { Icons } from "./icons";
@@ -29,6 +30,7 @@ export function SignInDialog() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     toast(email);
   });
+
   const handleSignIn = (provider: AuthProvider) => () => signIn(provider);
 
   const isLoading = form.formState.isSubmitting;
@@ -90,18 +92,6 @@ export function SignInDialog() {
           <Button
             variant="outline"
             disabled={isLoading}
-            onClick={handleSignIn("discord")}
-          >
-            {isLoading ? (
-              <Icons.Loader className="mr-2 size-4 animate-spin" />
-            ) : (
-              <Icons.Discord className="mr-2 size-4" />
-            )}
-            <span>Discord</span>
-          </Button>
-          <Button
-            variant="outline"
-            disabled={isLoading}
             onClick={handleSignIn("google")}
           >
             {isLoading ? (
@@ -110,6 +100,18 @@ export function SignInDialog() {
               <Icons.Google className="mr-2 size-4" />
             )}
             <span>Google</span>
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isLoading}
+            onClick={handleSignIn("discord")}
+          >
+            {isLoading ? (
+              <Icons.Loader className="mr-2 size-4 animate-spin" />
+            ) : (
+              <Icons.Discord className="mr-2 size-4" />
+            )}
+            <span>Discord</span>
           </Button>
           <Button
             variant="outline"
@@ -124,6 +126,27 @@ export function SignInDialog() {
             <span>GitHub</span>
           </Button>
         </div>
+        <p className="px-8 text-center text-xs text-muted-foreground">
+          By clicking continue, you agree to our{" "}
+          <Dialog.Close asChild>
+            <Link
+              href="/terms"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Terms of Service
+            </Link>
+          </Dialog.Close>{" "}
+          and{" "}
+          <Dialog.Close asChild>
+            <Link
+              href="/privacy"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Privacy Policy
+            </Link>
+          </Dialog.Close>
+          .
+        </p>
       </Dialog.Content>
     </Dialog>
   );
