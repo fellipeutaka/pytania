@@ -1,15 +1,17 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { siteConfig } from "~/config/site";
-import { auth } from "~/lib/auth";
 
 import { Icons } from "./icons";
 import { ModeToggle } from "./mode-toggle";
 import { Profile } from "./profile";
 import { SignInDialog } from "./sign-in-dialog";
 
-export async function SiteHeader() {
-  const session = await auth();
+export function SiteHeader() {
+  const { data: session } = useSession();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -20,7 +22,7 @@ export async function SiteHeader() {
         </Link>
         <div className="flex items-center gap-2">
           <ModeToggle />
-          {session ? <Profile session={session} /> : <SignInDialog />}
+          {session ? <Profile /> : <SignInDialog />}
         </div>
       </div>
     </header>

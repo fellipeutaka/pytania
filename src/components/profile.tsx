@@ -1,24 +1,21 @@
 "use client";
 
-import { signOut } from "next-auth/react";
-import type { Session } from "next-auth/types";
+import { signOut, useSession } from "next-auth/react";
 
 import { Icons } from "./icons";
 import { AlertDialog } from "./ui/alert-dialog";
 import { Avatar } from "./ui/avatar";
 import { DropdownMenu } from "./ui/dropdown-menu";
 
-type ProfileProps = {
-  session: Session;
-};
+export function Profile() {
+  const { data: session } = useSession();
 
-export function Profile({ session }: ProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenu.Trigger asChild>
         <Avatar asChild>
           <button className="outline-none ring-offset-background transition focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <Avatar.Image src={session.user.image || ""} />
+            <Avatar.Image src={session?.user.image || ""} />
             <Avatar.Fallback>
               <Icons.User className="size-4" />
             </Avatar.Fallback>
@@ -29,10 +26,10 @@ export function Profile({ session }: ProfileProps) {
         <DropdownMenu.Label className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {session.user.name}
+              {session?.user.name}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {session.user.email}
+              {session?.user.email}
             </p>
           </div>
         </DropdownMenu.Label>
