@@ -40,21 +40,21 @@ const techs = [
 
 export function TechSection() {
   return (
-    <section>
-      <h2 className="text-center text-sm font-semibold uppercase text-muted-foreground">
+    <section className="text-muted-foreground motion-safe:animate-fade-up motion-safe:animate-delay-500">
+      <h2 className="text-center text-sm font-semibold uppercase">
         The world's most innovative companies use our app
       </h2>
-      <div className="my-7 flex flex-wrap items-center justify-center gap-10 gap-y-8 lg:gap-14">
-        {techs.map(({ name, link, icon }) => (
+      <div className="flex flex-wrap items-center justify-center gap-10 gap-y-8 lg:gap-14">
+        {techs.map((tech) => (
           <a
-            href={link}
-            key={link}
-            className="text-muted-foreground transition duration-300 hover:text-foreground"
+            href={tech.link}
+            key={tech.link}
+            className="transition duration-300 hover:text-foreground"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {icon}
-            <span className="sr-only">{name}</span>
+            {tech.icon}
+            <span className="sr-only">{tech.name}</span>
           </a>
         ))}
       </div>
