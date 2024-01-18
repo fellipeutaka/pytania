@@ -3,8 +3,9 @@
 import { forwardRef } from "react";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
 import { tv } from "mizuhara/utils";
+
+import { Icons } from "../icons";
 
 export const DialogStyles = {
   Overlay: tv({
@@ -87,7 +88,7 @@ const DialogContent = forwardRef<
         aria-label="Close"
         className={DialogStyles.Close()}
       >
-        <X className="size-4" />
+        <Icons.X className="size-4" />
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>

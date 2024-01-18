@@ -1,5 +1,5 @@
 {
-  "id": "b3d42ad7-e758-49c9-9d56-07bb7096efb1",
+  "id": "784f8ff6-0163-4ada-b120-52747c2c3524",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -81,7 +81,6 @@
           "name": "account_userId_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "schemaTo": "public",
           "columnsFrom": ["userId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
@@ -125,7 +124,6 @@
           "name": "session_userId_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "schemaTo": "public",
           "columnsFrom": ["userId"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
@@ -231,6 +229,13 @@
           "primaryKey": false,
           "notNull": true
         },
+        "is_correct": {
+          "name": "is_correct",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -252,7 +257,6 @@
           "name": "answer_question_id_question_id_fk",
           "tableFrom": "answer",
           "tableTo": "question",
-          "schemaTo": "public",
           "columnsFrom": ["question_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
@@ -276,12 +280,6 @@
         "text": {
           "name": "text",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "correct_answer_id": {
-          "name": "correct_answer_id",
-          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -312,7 +310,6 @@
           "name": "question_quiz_id_quiz_id_fk",
           "tableFrom": "question",
           "tableTo": "quiz",
-          "schemaTo": "public",
           "columnsFrom": ["quiz_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
@@ -372,7 +369,6 @@
           "name": "quiz_creator_id_user_id_fk",
           "tableFrom": "quiz",
           "tableTo": "user",
-          "schemaTo": "public",
           "columnsFrom": ["creator_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { uuid, text, timestamp, pgTable } from "drizzle-orm/pg-core";
+import { uuid, text, timestamp, pgTable, boolean } from "drizzle-orm/pg-core";
 
 import { users } from "./auth";
 
@@ -17,7 +17,6 @@ export const quizzes = pgTable("quiz", {
 export const questions = pgTable("question", {
   id: uuid("id").primaryKey().defaultRandom(),
   text: text("text").notNull(),
-  correctAnswerId: uuid("correct_answer_id").notNull(),
   quizId: uuid("quiz_id")
     .notNull()
     .references(() => quizzes.id),
@@ -31,6 +30,7 @@ export const answers = pgTable("answer", {
   questionId: uuid("question_id")
     .notNull()
     .references(() => questions.id),
+  isCorrect: boolean("is_correct").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

@@ -3,15 +3,20 @@
 import { randomUUID } from "node:crypto";
 
 import { db } from "~/lib/db";
-import { answers, questions, quizzes } from "~/lib/db/schema/quiz";
+import {
+  answers,
+  questions as questionsSchema,
+  quizzes,
+} from "~/lib/db/schema/quiz";
 
-type CreateQuizProps = typeof quizzes.$inferInsert;
+import type { CreateQuizSchema } from "./schema";
 
 export async function createQuiz({
   name,
   description,
   creatorId,
-}: CreateQuizProps) {
+  questions,
+}: CreateQuizSchema) {
   const [quiz] = await db
     .insert(quizzes)
     .values({
@@ -21,33 +26,23 @@ export async function createQuiz({
     })
     .returning();
 
-  const questionId = randomUUID();
-  const correctAnswerId = randomUUID();
+  const data = questions.map((question) => ({
+    ...question,
+    id: randomUUID(),
+  }));
 
-  await db.insert(questions).values({
-    id: questionId,
-    quizId: quiz.id,
-    text: "What is the capital of France?",
-    correctAnswerId: correctAnswerId,
-  });
+  for (const question of data) {
+    await db.insert(questionsSchema).values({
+      id: question.id,
+      quizId: quiz.id,
+      text: question.text,
+    });
 
-  await db.insert(answers).values([
-    {
-      id: correctAnswerId,
-      questionId,
-      text: "Paris",
-    },
-    {
-      questionId,
-      text: "London",
-    },
-    {
-      questionId,
-      text: "Berlin",
-    },
-    {
-      questionId,
-      text: "Rome",
-    },
-  ]);
+    await db.insert(answers).values(
+      question.answers.map((answer) => ({
+        ...answer,
+        questionId: question.id,
+      })),
+    );
+  }
 }

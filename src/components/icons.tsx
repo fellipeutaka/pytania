@@ -12,8 +12,10 @@ import {
   PlusIcon,
   SettingsIcon,
   SunIcon,
+  TrashIcon,
   TwitterIcon,
   UserIcon,
+  XIcon,
 } from "lucide-react";
 
 type IconProps = React.ComponentPropsWithoutRef<"svg">;
@@ -210,4 +212,6 @@ export const Icons = {
   LogOut: LogOutIcon,
   Palette: PaletteIcon,
   Plus: PlusIcon,
+  X: XIcon,
+  Trash: TrashIcon,
 };
