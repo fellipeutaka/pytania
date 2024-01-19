@@ -9,7 +9,7 @@ https://quiz.rocketseat.com.br/quizzes/react
 - [x] Create account with Google
 - [x] Create account with GitHub
 - [ ] Create account with Magic Link
-- [ ] Create Quiz
+- [x] Create Quiz
 - [ ] Update Quiz
 - [ ] Delete Quiz
 - [ ] Play Quiz
@@ -19,6 +19,7 @@ https://quiz.rocketseat.com.br/quizzes/react
 - [ ] Refactor database calls
 - [ ] Create a seed script
 - [ ] OpenGraph Image
+- [x] Rate limiter (https://vercel.com/guides/rate-limiting-edge-middleware-vercel-kv)
 
 ## Overview
 

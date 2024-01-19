@@ -1,12 +1,9 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import dynamic from "next/dynamic";
+import { ThemeProvider } from "next-themes";
 
 import { Toaster } from "./ui/toast";
-const ThemeProvider = dynamic(() =>
-  import("next-themes").then((mod) => mod.ThemeProvider),
-);
 
 export function Providers({ children }: PropsWithChildren) {
   return (

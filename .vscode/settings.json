@@ -9,8 +9,13 @@
     "nextjs",
     "paralleldrive",
     "pytania",
+    "ratelimit",
+    "redaxios",
     "Shadcn",
     "sonner",
+    "upstash",
     "usehooks"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

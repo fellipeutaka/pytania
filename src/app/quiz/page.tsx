@@ -5,6 +5,8 @@ import { Button } from "~/components/ui/button";
 import { db } from "~/lib/db";
 import { quizzes } from "~/lib/db/schema/quiz";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const data = await db.select().from(quizzes);
 

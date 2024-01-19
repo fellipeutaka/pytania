@@ -1,83 +1,34 @@
 "use client";
 
-import { useState } from "react";
-
-import type { Session } from "next-auth/types";
-import { toast } from "sonner";
-import { z } from "zod";
-
 import { Icons } from "~/components/icons";
 import { Button } from "~/components/ui/button";
-import {
-  Form,
-  useFieldArray,
-  useForm,
-  type Control,
-} from "~/components/ui/form";
+import { Form, useFieldArray, type Control } from "~/components/ui/form";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { Switch } from "~/components/ui/switch";
 import { Tabs } from "~/components/ui/tabs";
+import { Textarea } from "~/components/ui/textarea";
 import { TextField } from "~/components/ui/textfield";
-import { createQuiz } from "~/services/quiz";
-import { createQuizSchema } from "~/services/quiz/schema";
 
-const schema = createQuizSchema.omit({ creatorId: true });
+import { useCreateQuiz, type CreateQuizSchema } from "./use-create-quiz";
 
-type CreateQuizFormProps = {
-  session: Session;
-};
-
-export function CreateQuizForm({ session }: CreateQuizFormProps) {
-  const form = useForm({
-    schema,
-    defaultValues: {
-      name: "",
-      description: "",
-      questions: [
-        {
-          text: "Question 1",
-          answers: [
-            {
-              text: "",
-              isCorrect: false,
-            },
-          ],
-        },
-      ],
-    },
-  });
-  const questions = useFieldArray({
-    name: "questions",
-    control: form.control,
-  });
-  const watchQuestions = form.watch("questions", questions.fields);
-  const [currentQuestion, setCurrentQuestion] = useState("0");
-
-  const handleCreateQuiz = form.handleSubmit(
-    async ({ name, description, questions }) => {
-      try {
-        await createQuiz({
-          name,
-          description,
-          creatorId: session.user.id,
-          questions,
-        });
-
-        form.reset();
-        toast.success("Quiz created");
-      } catch (error) {
-        toast.error(
-          "An error occurred while creating the quiz. Please try again.",
-        );
-      }
-    },
-  );
-
-  const isLoading = form.formState.isSubmitting;
+export function CreateQuizForm() {
+  const {
+    form,
+    questions,
+    watchQuestions,
+    currentQuestion,
+    setCurrentQuestion,
+    handleCreateQuiz,
+    isLoading,
+  } = useCreateQuiz();
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={handleCreateQuiz}>
+      <form
+        className="space-y-6"
+        onSubmit={handleCreateQuiz}
+        autoComplete="off"
+      >
         <Form.Field
           control={form.control}
           name="name"
@@ -99,11 +50,9 @@ export function CreateQuizForm({ session }: CreateQuizFormProps) {
           render={({ field }) => (
             <Form.Item>
               <Form.Label>Description</Form.Label>
-              <TextField>
-                <Form.Control>
-                  <TextField.Input {...field} />
-                </Form.Control>
-              </TextField>
+              <Form.Control>
+                <Textarea {...field} />
+              </Form.Control>
               <Form.Message />
             </Form.Item>
           )}
@@ -192,7 +141,7 @@ export function CreateQuizForm({ session }: CreateQuizFormProps) {
 
 type AnswerFieldProps = {
   index: number;
-  control: Control<z.output<typeof schema>>;
+  control: Control<CreateQuizSchema>;
 };
 
 function AnswerField({ index, control }: AnswerFieldProps) {

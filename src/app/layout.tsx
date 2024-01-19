@@ -55,6 +55,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html
       lang="en"
       className="selection:bg-cyan-5 selection:text-cyan-12 motion-safe:scroll-smooth"
+      suppressHydrationWarning
     >
       <body
         className="grid min-h-screen grid-rows-[3.5rem,1fr,min-content] bg-gradient-to-b from-background to-card text-foreground antialiased"

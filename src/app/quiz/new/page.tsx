@@ -9,7 +9,7 @@ export default async function Page() {
     <main className="container pb-12 pt-16 lg:py-28">
       <h1 className="mb-4 text-4xl font-bold">New Quiz</h1>
 
-      {session ? <CreateQuizForm session={session} /> : <p>Not logged</p>}
+      {session ? <CreateQuizForm /> : <p>Not logged</p>}
     </main>
   );
 }
