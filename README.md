@@ -18,7 +18,7 @@ https://quiz.rocketseat.com.br/quizzes/react
 - [ ] Comment Quiz
 - [ ] Refactor database calls
 - [ ] Create a seed script
-- [ ] OpenGraph Image
+- [x] OpenGraph Image
 - [x] Rate limiter (https://vercel.com/guides/rate-limiting-edge-middleware-vercel-kv)
 
 ## Overview
