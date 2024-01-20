@@ -1,26 +1,27 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+import { createEnv } from "@nobara/next";
+import { url, minLength, string } from "valibot";
 
 export const env = createEnv({
-  server: {
-    UPSTASH_REDIS_REST_URL: z.string().url(),
-    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+	server: {
+		UPSTASH_REDIS_REST_URL: string([url()]),
+		UPSTASH_REDIS_REST_TOKEN: string([minLength(1)]),
 
-    DATABASE_URL: z.string().min(1),
+		DATABASE_URL: string([minLength(1)]),
 
-    RESEND_API_KEY: z.string().min(1),
+		RESEND_API_KEY: string([minLength(1)]),
 
-    NEXTAUTH_SECRET: z.string().min(1),
-    NEXTAUTH_URL: z.string().url(),
+		NEXTAUTH_SECRET: string([minLength(1)]),
+		NEXTAUTH_URL: string([url()]),
 
-    DISCORD_CLIENT_ID: z.string().min(1),
-    DISCORD_CLIENT_SECRET: z.string().min(1),
+		DISCORD_CLIENT_ID: string([minLength(1)]),
+		DISCORD_CLIENT_SECRET: string([minLength(1)]),
 
-    GOOGLE_CLIENT_ID: z.string().min(1),
-    GOOGLE_CLIENT_SECRET: z.string().min(1),
+		GOOGLE_CLIENT_ID: string([minLength(1)]),
+		GOOGLE_CLIENT_SECRET: string([minLength(1)]),
 
-    GITHUB_CLIENT_ID: z.string().min(1),
-    GITHUB_CLIENT_SECRET: z.string().min(1),
-  },
-  emptyStringAsUndefined: true,
+		GITHUB_CLIENT_ID: string([minLength(1)]),
+		GITHUB_CLIENT_SECRET: string([minLength(1)]),
+	},
+	emptyStringAsUndefined: true,
+	experimental__runtimeEnv: {},
 });

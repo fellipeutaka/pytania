@@ -1,21 +1,30 @@
 {
-  "cSpell.words": [
-    "commitlint",
-    "hookform",
-    "lucide",
-    "mizuhara",
-    "neondatabase",
-    "NEXTAUTH",
-    "nextjs",
-    "paralleldrive",
-    "pytania",
-    "ratelimit",
-    "redaxios",
-    "Shadcn",
-    "sonner",
-    "upstash",
-    "usehooks"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+	"cSpell.words": [
+		"biomejs",
+		"commitlint",
+		"hookform",
+		"lucide",
+		"mizuhara",
+		"neondatabase",
+		"NEXTAUTH",
+		"nextjs",
+		"nobara",
+		"opengraph",
+		"paralleldrive",
+		"pytania",
+		"ratelimit",
+		"redaxios",
+		"Shadcn",
+		"sonner",
+		"upstash",
+		"usehooks",
+		"valibot"
+	],
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.codeActionsOnSave": {
+		"quickfix.biome": "explicit",
+		"source.organizeImports.biome": "explicit"
+	}
 }

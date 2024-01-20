@@ -1,9 +1,0 @@
-{
-  "root": true,
-  "plugins": ["drizzle"],
-  "extends": [
-    "@fellipeutaka/eslint-config/next",
-    "@fellipeutaka/eslint-config/tailwind",
-    "plugin:drizzle/recommended"
-  ]
-}

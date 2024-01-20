@@ -1,23 +1,24 @@
 import { db, isNodePg } from ".";
 
 async function main() {
-  console.log("⏳ Seeding database...");
+	console.log("⏳ Seeding database...");
 
-  const start = Date.now();
+	const start = Date.now();
 
-  console.log("💾 Using", isNodePg(db) ? "Node Postgres" : "Neon");
+	console.log("💾 Using", isNodePg(db) ? "Node Postgres" : "Neon");
 
-  // TODO: Seed your database here
+	// TODO: Seed your database here
+	await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const end = Date.now();
+	const end = Date.now();
 
-  console.log("✅ Seed completed in", end - start, "ms");
+	console.log("✅ Seed completed in", end - start, "ms");
 
-  process.exit(0);
+	process.exit(0);
 }
 
 main().catch((err) => {
-  console.error("❌ Seed failed");
-  console.error(err);
-  process.exit(1);
+	console.error("❌ Seed failed");
+	console.error(err);
+	process.exit(1);
 });

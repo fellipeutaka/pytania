@@ -1,22 +1,29 @@
-import { z } from "zod";
+import {
+	type Output,
+	array,
+	boolean,
+	minLength,
+	object,
+	string,
+	toTrimmed,
+	uuid,
+} from "valibot";
 
-const nonEmptyString = z.string().trim().min(1);
-
-export const createQuizSchema = z.object({
-  name: nonEmptyString,
-  description: nonEmptyString,
-  creatorId: z.string().uuid(),
-  questions: z.array(
-    z.object({
-      text: nonEmptyString,
-      answers: z.array(
-        z.object({
-          text: nonEmptyString,
-          isCorrect: z.boolean(),
-        }),
-      ),
-    }),
-  ),
+export const createQuizSchema = object({
+	name: string([toTrimmed(), minLength(1)]),
+	description: string([toTrimmed(), minLength(1)]),
+	creatorId: string([uuid()]),
+	questions: array(
+		object({
+			text: string([toTrimmed(), minLength(1)]),
+			answers: array(
+				object({
+					text: string([toTrimmed(), minLength(1)]),
+					isCorrect: boolean(),
+				}),
+			),
+		}),
+	),
 });
 
-export type CreateQuizSchema = z.output<typeof createQuizSchema>;
+export type CreateQuizSchema = Output<typeof createQuizSchema>;

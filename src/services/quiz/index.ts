@@ -3,46 +3,80 @@
 import { randomUUID } from "node:crypto";
 
 import { db } from "~/lib/db";
-import {
-  answers,
-  questions as questionsSchema,
-  quizzes,
-} from "~/lib/db/schema/quiz";
+import { quizzes, submissions } from "~/lib/db/schema/quiz";
 
+import { eq } from "drizzle-orm";
+import { safeParse, string, uuid } from "valibot";
 import type { CreateQuizSchema } from "./schema";
 
+export async function getQuizzes() {
+	return await db.select().from(quizzes);
+}
+
+export async function getQuiz(id: string) {
+	const { success } = safeParse(string([uuid()]), id);
+	if (!success) return null;
+
+	return await db
+		.select()
+		.from(quizzes)
+		.where(eq(quizzes.id, id))
+		.then(([res]) => res ?? null);
+}
+
 export async function createQuiz({
-  name,
-  description,
-  creatorId,
-  questions,
+	name,
+	description,
+	creatorId,
+	questions,
 }: CreateQuizSchema) {
-  const [quiz] = await db
-    .insert(quizzes)
-    .values({
-      name,
-      description,
-      creatorId,
-    })
-    .returning();
+	await db.insert(quizzes).values({
+		name,
+		description,
+		creatorId,
+		questions: questions.map((question) => ({
+			...question,
+			id: randomUUID(),
+			answers: question.answers.map((answer) => ({
+				...answer,
+				id: randomUUID(),
+			})),
+		})),
+	});
+}
 
-  const data = questions.map((question) => ({
-    ...question,
-    id: randomUUID(),
-  }));
+export async function getSubmission(id: string) {
+	const { success } = safeParse(string([uuid()]), id);
+	if (!success) return null;
 
-  for (const question of data) {
-    await db.insert(questionsSchema).values({
-      id: question.id,
-      quizId: quiz.id,
-      text: question.text,
-    });
+	return await db
+		.select()
+		.from(submissions)
+		.where(eq(submissions.id, id))
+		.then(([res]) => res ?? null);
+}
 
-    await db.insert(answers).values(
-      question.answers.map((answer) => ({
-        ...answer,
-        questionId: question.id,
-      })),
-    );
-  }
+type CreateSubmissionProps = {
+	quizId: string;
+	questionId: string;
+	userId: string;
+};
+
+export async function createSubmission({
+	quizId,
+	questionId,
+	userId,
+}: CreateSubmissionProps) {
+	"use server";
+
+	const [submission] = await db
+		.insert(submissions)
+		.values({
+			quizId,
+			questionId,
+			userId,
+		})
+		.returning();
+
+	return submission;
 }

@@ -16,9 +16,10 @@ https://quiz.rocketseat.com.br/quizzes/react
 - [ ] Like Quiz
 - [ ] Dislike Quiz
 - [ ] Comment Quiz
-- [ ] Refactor database calls
+- [x] Refactor database calls
 - [ ] Create a seed script
 - [x] OpenGraph Image
+- [x] Migrate from Zod to Valibot (https://valibot.dev/guides/migrate-from-zod)
 - [x] Rate limiter (https://vercel.com/guides/rate-limiting-edge-middleware-vercel-kv)
 
 ## Overview
