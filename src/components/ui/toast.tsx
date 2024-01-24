@@ -19,7 +19,7 @@ export function Toaster({ ...props }: ToasterProps) {
           cancelButton: "group:bg-muted group:text-muted-foreground",
         },
       }}
-      richColors={true}
+      richColors
       {...props}
     />
   );

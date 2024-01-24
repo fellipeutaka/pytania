@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { auth } from "~/lib/auth";
 import { getQuiz } from "~/services/quiz";
+import { CreatorActions } from "./creator-actions";
 import { QuizActions } from "./quiz-actions";
 
 type PageProps = {
@@ -25,13 +26,17 @@ export default async function Page({ params: { id } }: PageProps) {
         {data.description}
       </p>
       {session ? (
-        <QuizActions
-          {...{
-            quizId: id,
-            questionId: data.questions[0].id,
-            userId: session.user.id,
-          }}
-        />
+        data.creatorId === session.user.id ? (
+          <CreatorActions />
+        ) : (
+          <QuizActions
+            {...{
+              quizId: id,
+              questionId: data.questions[0].id,
+              userId: session.user.id,
+            }}
+          />
+        )
       ) : (
         <p>Sign in first</p>
       )}

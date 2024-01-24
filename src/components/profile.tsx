@@ -12,8 +12,8 @@ export function Profile() {
 
   return (
     <DropdownMenu>
-      <DropdownMenu.Trigger asChild={true}>
-        <Avatar asChild={true}>
+      <DropdownMenu.Trigger asChild>
+        <Avatar asChild>
           <button
             type="button"
             className="outline-none ring-offset-background transition focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -47,7 +47,7 @@ export function Profile() {
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
         <AlertDialog>
-          <AlertDialog.Trigger asChild={true}>
+          <AlertDialog.Trigger asChild>
             <DropdownMenu.Item onSelect={(e) => e.preventDefault()}>
               <Icons.LogOut className="mr-2 size-4" /> Log out
             </DropdownMenu.Item>

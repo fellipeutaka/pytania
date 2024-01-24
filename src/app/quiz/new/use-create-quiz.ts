@@ -1,11 +1,11 @@
+import { TRPCClientError } from "@trpc/client";
 import { useState } from "react";
 
 import { toast } from "sonner";
 import { type Output, omit } from "valibot";
 
 import { useFieldArray, useForm } from "~/components/ui/form";
-import { useSession } from "~/hooks/use-session";
-import { type ApiError, api } from "~/lib/api";
+import { api } from "~/lib/api/client";
 import { createQuizSchema } from "~/services/quiz/schema";
 
 const schema = omit(createQuizSchema, ["creatorId"]);
@@ -18,8 +18,6 @@ const errorMap: Record<number | "default", string> = {
 };
 
 export function useCreateQuiz() {
-  const { session } = useSession();
-
   const form = useForm({
     schema,
     defaultValues: {
@@ -45,13 +43,14 @@ export function useCreateQuiz() {
   const watchQuestions = form.watch("questions", questions.fields);
   const [currentQuestion, setCurrentQuestion] = useState("0");
 
+  const createQuizMutation = api.quiz.create.useMutation();
+
   const handleCreateQuiz = form.handleSubmit(
     ({ name, description, questions }) => {
       toast.promise(
-        api.post("/api/quiz", {
+        createQuizMutation.mutateAsync({
           name,
           description,
-          creatorId: session?.user.id,
           questions,
         }),
         {
@@ -60,15 +59,21 @@ export function useCreateQuiz() {
             form.reset();
             return "Quiz created";
           },
-          error(err: ApiError) {
-            return errorMap[err.status] ?? errorMap.default;
+          error(err) {
+            if (err instanceof TRPCClientError) {
+              return (
+                errorMap[(err.meta?.response as Response).status] ??
+                errorMap.default
+              );
+            }
+            return errorMap.default;
           },
         },
       );
     },
   );
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = createQuizMutation.isPending;
 
   return {
     form,

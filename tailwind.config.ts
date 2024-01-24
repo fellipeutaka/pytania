@@ -9,7 +9,17 @@ const colors = createPlugin();
 const config: Config = {
   content: ["./src/{app,components}/**/*.tsx"],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap, 1rem)))" },
+        },
+      },
+      animation: {
+        marquee: "marquee var(--duration, 20s) linear infinite",
+      },
+    },
   },
   plugins: [colors.plugin, typography],
   presets: [

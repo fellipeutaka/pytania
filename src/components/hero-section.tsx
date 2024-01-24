@@ -18,10 +18,10 @@ export function HeroSection() {
         experience. Join the community of knowledge seekers today.
       </h2>
       <div className="flex items-center justify-center gap-4 motion-safe:animate-fade-up motion-safe:animate-delay-300">
-        <Button size="lg" asChild={true}>
+        <Button size="lg" asChild>
           <Link href="/quiz">Get Started</Link>
         </Button>
-        <Button size="lg" variant="outline" asChild={true}>
+        <Button size="lg" variant="outline" asChild>
           <a
             href={siteConfig.links.github}
             target="_blank"

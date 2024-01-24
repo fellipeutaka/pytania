@@ -29,13 +29,13 @@ export function SiteFooter() {
           .
         </p>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild={true}>
+          <Button variant="ghost" size="icon" asChild>
             <a href={siteConfig.links.github} target="_blank" rel="noreferrer">
               <Icons.Github className="size-4" />
               <span className="sr-only">GitHub</span>
             </a>
           </Button>
-          <Button variant="ghost" size="icon" asChild={true}>
+          <Button variant="ghost" size="icon" asChild>
             <a href={siteConfig.links.twitter} target="_blank" rel="noreferrer">
               <Icons.Twitter className="size-4" />
               <span className="sr-only">Twitter</span>

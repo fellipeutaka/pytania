@@ -17,7 +17,7 @@ export default function Page() {
       <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
         Too many requests!
       </h2>
-      <Button className="mx-auto w-max" asChild={true}>
+      <Button className="mx-auto w-max" asChild>
         <Link href="/">
           <Icons.ChevronLeft className="mr-2 size-4" />
           Go back home

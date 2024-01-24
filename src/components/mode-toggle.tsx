@@ -11,7 +11,7 @@ export function ModeToggle() {
 
   return (
     <DropdownMenu>
-      <DropdownMenu.Trigger asChild={true}>
+      <DropdownMenu.Trigger asChild>
         <Button variant="ghost" size="icon">
           <Icons.Sun className="size-4 scale-100 dark:scale-0" />
           <Icons.Moon className="absolute size-4 scale-0 dark:scale-100" />

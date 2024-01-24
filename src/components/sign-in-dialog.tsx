@@ -37,7 +37,7 @@ export function SignInDialog() {
 
   return (
     <Dialog>
-      <Dialog.Trigger asChild={true}>
+      <Dialog.Trigger asChild>
         <Button size="sm">Sign in</Button>
       </Dialog.Trigger>
       <Dialog.Content>
@@ -128,7 +128,7 @@ export function SignInDialog() {
         </div>
         <p className="px-8 text-center text-xs text-muted-foreground">
           By clicking continue, you agree to our{" "}
-          <Dialog.Close asChild={true}>
+          <Dialog.Close asChild>
             <Link
               href="/terms"
               className="underline underline-offset-4 hover:text-primary"
@@ -137,7 +137,7 @@ export function SignInDialog() {
             </Link>
           </Dialog.Close>{" "}
           and{" "}
-          <Dialog.Close asChild={true}>
+          <Dialog.Close asChild>
             <Link
               href="/privacy"
               className="underline underline-offset-4 hover:text-primary"

@@ -6,11 +6,10 @@ import {
 } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 
+import { isDev } from "~/utils";
 import { env } from "../env/index.mjs";
 
 neonConfig.fetchConnectionCache = true;
-
-const isDev = process.env.NODE_ENV === "development";
 
 export const db = isDev
   ? drizzleNode(
@@ -20,6 +19,6 @@ export const db = isDev
     )
   : drizzleNeon(neon(env.DATABASE_URL));
 
-export function isNodePg(database: typeof db): database is NodePgDatabase {
+export function isNodePg(_database: typeof db): _database is NodePgDatabase {
   return isDev;
 }
