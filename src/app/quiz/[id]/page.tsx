@@ -33,7 +33,6 @@ export default async function Page({ params: { id } }: PageProps) {
             {...{
               quizId: id,
               questionId: quiz.questions[0].id,
-              userId: session.user.id,
             }}
           />
         )

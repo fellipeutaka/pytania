@@ -2,15 +2,10 @@ import { TRPCClientError } from "@trpc/client";
 import { useState } from "react";
 
 import { toast } from "sonner";
-import { type Output, omit } from "valibot";
 
 import { useFieldArray, useForm } from "~/components/ui/form";
 import { api } from "~/lib/api/client";
-import { createQuizSchema } from "~/services/quiz/schema";
-
-const schema = omit(createQuizSchema, ["creatorId"]);
-
-export type CreateQuizSchema = Output<typeof schema>;
+import { createQuizSchema } from "~/lib/api/dtos/quiz";
 
 const errorMap: Record<number | "default", string> = {
   429: "You are doing that too much. Please try again later.",
@@ -19,7 +14,7 @@ const errorMap: Record<number | "default", string> = {
 
 export function useCreateQuiz() {
   const form = useForm({
-    schema,
+    schema: createQuizSchema,
     defaultValues: {
       name: "",
       description: "",

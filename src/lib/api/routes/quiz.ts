@@ -1,24 +1,40 @@
+import { randomUUID } from "node:crypto";
 import { wrap } from "@decs/typeschema";
-import { omit, string, uuid } from "valibot";
-import { createQuiz, getQuiz, getQuizzes } from "~/services/quiz";
-import { createQuizSchema } from "~/services/quiz/schema";
+import { eq } from "drizzle-orm";
+import { string, uuid } from "valibot";
+import { quizzes } from "~/lib/db/schema/quiz";
+import { createQuizSchema } from "../dtos/quiz";
 import { protectedProcedure, publicProcedure, router } from "../server";
 
 export const quizRouter = router({
-  findMany: publicProcedure.query(async () => {
-    return await getQuizzes();
+  findMany: publicProcedure.query(async ({ ctx: { db } }) => {
+    return await db.select().from(quizzes);
   }),
   findUnique: publicProcedure
     .input(wrap(string([uuid()])))
-    .query(async ({ input }) => {
-      return await getQuiz(input);
+    .query(async ({ input, ctx: { db } }) => {
+      return await db
+        .select()
+        .from(quizzes)
+        .where(eq(quizzes.id, input))
+        .then((res) => res.at(0) ?? null);
     }),
   create: protectedProcedure
-    .input(wrap(omit(createQuizSchema, ["creatorId"])))
-    .mutation(async ({ input, ctx: { session } }) => {
-      await createQuiz({
-        ...input,
+    .input(wrap(createQuizSchema))
+    .mutation(async ({ input, ctx: { session, db } }) => {
+      const { name, description, questions } = input;
+      await db.insert(quizzes).values({
+        name,
+        description,
         creatorId: session.user.id,
+        questions: questions.map((question) => ({
+          ...question,
+          id: randomUUID(),
+          answers: question.answers.map((answer) => ({
+            ...answer,
+            id: randomUUID(),
+          })),
+        })),
       });
     }),
 });

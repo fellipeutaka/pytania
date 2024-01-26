@@ -9,7 +9,8 @@ import { Tabs } from "~/components/ui/tabs";
 import { Textarea } from "~/components/ui/textarea";
 import { TextField } from "~/components/ui/textfield";
 
-import { type CreateQuizSchema, useCreateQuiz } from "./use-create-quiz";
+import type { CreateQuizSchema } from "~/lib/api/dtos/quiz";
+import { useCreateQuiz } from "./use-create-quiz";
 
 export function CreateQuizForm() {
   const {

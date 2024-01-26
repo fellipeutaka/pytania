@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getQuiz, getSubmission } from "~/services/quiz";
+import { api } from "~/lib/api/server";
 import { SubmissionHeader } from "./submission-header";
 import { SubmitForm } from "./submit-form";
 
@@ -10,15 +10,16 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
-  const submission = await getSubmission(params.id);
+  const submission = await api.submission.findUnique.query(params.id);
   if (!submission) notFound();
 
-  const quiz = await getQuiz(submission.quizId);
+  const quiz = await api.quiz.findUnique.query(submission.quizId);
 
-  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const question = quiz?.questions.find(
     ({ id }) => id === submission.questionId,
-  )!;
+  );
+
+  if (!question) notFound();
 
   const currentQuestionIndex =
     quiz?.questions.findIndex(({ id }) => id === submission.questionId) ?? 1;
