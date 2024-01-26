@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
+import { api } from "~/lib/api/server";
 import { auth } from "~/lib/auth";
-import { getQuiz } from "~/services/quiz";
 import { CreatorActions } from "./creator-actions";
 import { QuizActions } from "./quiz-actions";
 
@@ -12,27 +12,27 @@ type PageProps = {
 };
 
 export default async function Page({ params: { id } }: PageProps) {
-  const data = await getQuiz(id);
-  if (!data) notFound();
+  const quiz = await api.quiz.findUnique.query(id);
+  if (!quiz) notFound();
 
   const session = await auth();
 
   return (
     <main className="grid place-content-center gap-4 text-center">
       <h1 className="text-balance text-3xl font-bold leading-tight sm:text-4xl">
-        {data.name}
+        {quiz.name}
       </h1>
       <p className="text-pretty leading-relaxed text-muted-foreground">
-        {data.description}
+        {quiz.description}
       </p>
       {session ? (
-        data.creatorId === session.user.id ? (
+        quiz.creatorId === session.user.id ? (
           <CreatorActions />
         ) : (
           <QuizActions
             {...{
               quizId: id,
-              questionId: data.questions[0].id,
+              questionId: quiz.questions[0].id,
               userId: session.user.id,
             }}
           />

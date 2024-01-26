@@ -1,4 +1,5 @@
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import { TRPCError, initTRPC } from "@trpc/server";
 import { getApiUrl } from "~/utils";
 import { auth } from "../auth";
@@ -66,4 +67,12 @@ export const api = createTRPCClient<AppRouter>({
       url: getApiUrl(),
     }),
   ],
+});
+
+/**
+ * Create functions you can use for server-side rendering / static generation
+ * @link https://trpc.io/docs/v11/client/nextjs/server-side-helpers
+ */
+export const helpers = createServerSideHelpers({
+  client: api,
 });

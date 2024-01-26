@@ -11,7 +11,16 @@ import { getApiUrl } from "~/utils";
 import { Toaster } from "./ui/toast";
 
 export function Providers({ children }: PropsWithChildren) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnMount: false,
+          },
+        },
+      }),
+  );
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
@@ -23,9 +32,9 @@ export function Providers({ children }: PropsWithChildren) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <api.Provider client={trpcClient} queryClient={queryClient}>
-        <SessionProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <api.Provider client={trpcClient} queryClient={queryClient}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -35,8 +44,8 @@ export function Providers({ children }: PropsWithChildren) {
             {children}
             <Toaster />
           </ThemeProvider>
-        </SessionProvider>
-      </api.Provider>
-    </QueryClientProvider>
+        </api.Provider>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
