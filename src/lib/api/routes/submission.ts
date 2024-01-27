@@ -32,4 +32,4 @@ export const submissionRouter = router({
     }),
 });
 
-export type QuizRouter = typeof submissionRouter;
+export type SubmissionRouter = typeof submissionRouter;

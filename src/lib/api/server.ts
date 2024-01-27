@@ -1,12 +1,15 @@
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { TRPCError, initTRPC } from "@trpc/server";
+import { SuperJSON } from "superjson";
 import { getApiUrl } from "~/utils";
 import { auth } from "../auth";
 import { db } from "../db";
 import type { AppRouter } from "./routes";
 
-const t = initTRPC.context<typeof createTRPCContext>().create();
+const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: SuperJSON,
+});
 
 export const router = t.router;
 
@@ -67,6 +70,7 @@ export const api = createTRPCClient<AppRouter>({
       url: getApiUrl(),
     }),
   ],
+  transformer: SuperJSON,
 });
 
 /**
