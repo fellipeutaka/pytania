@@ -91,7 +91,7 @@ const techs = [
 
 export function TechSection() {
   return (
-    <section className="text-muted-foreground motion-safe:animate-fade-up motion-safe:animate-delay-500">
+    <section className="text-muted-foreground motion-safe:animate-fade-up motion-safe:animate-delay-500 xl:max-w-screen-xl lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm max-w-xs">
       <h2 className="text-center text-sm font-semibold uppercase">
         The world's most innovative companies use our app
       </h2>
