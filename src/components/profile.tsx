@@ -1,14 +1,15 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
+import { useSession } from "~/hooks/use-session";
 import { Icons } from "./icons";
 import { AlertDialog } from "./ui/alert-dialog";
 import { Avatar } from "./ui/avatar";
 import { DropdownMenu } from "./ui/dropdown-menu";
 
 export function Profile() {
-  const { data: session } = useSession();
+  const { session } = useSession();
 
   return (
     <DropdownMenu>

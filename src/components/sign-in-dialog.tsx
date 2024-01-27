@@ -18,7 +18,9 @@ const schema = object({
   email: string([email()]),
 });
 
-export function SignInDialog() {
+export function SignInDialog({
+  children = <Button size="sm">Sign in</Button>,
+}: PropsWithOptionalChildren) {
   const form = useForm({
     schema,
     defaultValues: {
@@ -37,9 +39,7 @@ export function SignInDialog() {
 
   return (
     <Dialog>
-      <Dialog.Trigger asChild>
-        <Button size="sm">Sign in</Button>
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Title>Sign in</Dialog.Title>
         <Dialog.Description>

@@ -9,6 +9,8 @@ import { Tabs } from "~/components/ui/tabs";
 import { Textarea } from "~/components/ui/textarea";
 import { TextField } from "~/components/ui/textfield";
 
+import { WithSignInDialog } from "~/components/utils/with-sign-in-dialog";
+import { useSession } from "~/hooks/use-session";
 import type { CreateQuizSchema } from "~/lib/api/dtos/quiz";
 import { useCreateQuiz } from "./use-create-quiz";
 
@@ -22,6 +24,7 @@ export function CreateQuizForm() {
     handleCreateQuiz,
     isLoading,
   } = useCreateQuiz();
+  const { session } = useSession();
 
   return (
     <Form {...form}>
@@ -131,10 +134,17 @@ export function CreateQuizForm() {
           ))}
         </Tabs>
 
-        <Button className="w-full" size="lg" type="submit" disabled={isLoading}>
-          {isLoading && <Icons.Loader className="mr-2 size-4 animate-spin" />}
-          Create quiz
-        </Button>
+        <WithSignInDialog session={session}>
+          <Button
+            className="w-full"
+            size="lg"
+            type={session ? "submit" : "button"}
+            disabled={isLoading}
+          >
+            {isLoading && <Icons.Loader className="mr-2 size-4 animate-spin" />}
+            Create quiz
+          </Button>
+        </WithSignInDialog>
       </form>
     </Form>
   );

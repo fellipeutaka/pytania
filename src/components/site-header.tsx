@@ -1,17 +1,17 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { siteConfig } from "~/config/site";
 
+import { useSession } from "~/hooks/use-session";
 import { Icons } from "./icons";
 import { ModeToggle } from "./mode-toggle";
 import { Profile } from "./profile";
 import { SignInDialog } from "./sign-in-dialog";
 
 export function SiteHeader() {
-  const { data: session } = useSession();
+  const { session } = useSession();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
