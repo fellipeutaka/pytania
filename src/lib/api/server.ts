@@ -1,11 +1,28 @@
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { TRPCClientError, createTRPCClient } from "@trpc/client";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { TRPCError, initTRPC } from "@trpc/server";
+import { observable } from "@trpc/server/observable";
 import { SuperJSON } from "superjson";
-import { getApiUrl } from "~/utils";
 import { auth } from "../auth";
 import { db } from "../db";
 import type { AppRouter } from "./routes";
+
+import type { TRPCErrorResponse } from "@trpc/server/unstable-core-do-not-import";
+import { headers } from "next/headers";
+import { cache } from "react";
+
+/**
+ * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
+ * handling a tRPC call from a React Server Component.
+ */
+export const createContext = cache(() => {
+  const heads = new Headers(headers());
+  heads.set("x-trpc-source", "rsc");
+
+  return createTRPCContext({
+    headers: heads,
+  });
+});
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: SuperJSON,
@@ -66,9 +83,21 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 
 export const api = createTRPCClient<AppRouter>({
   links: [
-    httpBatchLink({
-      url: getApiUrl(),
-    }),
+    /**
+     * Custom RSC link that lets us invoke procedures without using http requests. Since Server
+     * Components always run on the server, we can just call the procedure as a function.
+     */
+    () => () =>
+      observable((observer) => {
+        createContext()
+          .then((data) => {
+            observer.next({ result: { data } });
+            observer.complete();
+          })
+          .catch((cause: TRPCErrorResponse) => {
+            observer.error(TRPCClientError.from(cause));
+          });
+      }),
   ],
   transformer: SuperJSON,
 });
