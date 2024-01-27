@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 import { helpers } from "~/lib/api/server";
 import { QuizList } from "./quiz-list";
 
-export const revalidate = 0;
+export const revalidate = 30;
 
 export default async function Page() {
   await helpers.quiz.findMany.prefetch();

@@ -8,7 +8,15 @@ import { protectedProcedure, publicProcedure, router } from "../server";
 
 export const quizRouter = router({
   findMany: publicProcedure.query(async ({ ctx: { db } }) => {
-    return await db.select().from(quizzes);
+    return await db
+      .select({
+        id: quizzes.id,
+        name: quizzes.name,
+        description: quizzes.description,
+        creatorId: quizzes.creatorId,
+        createdAt: quizzes.createdAt,
+      })
+      .from(quizzes);
   }),
   findUnique: publicProcedure
     .input(wrap(string([uuid()])))

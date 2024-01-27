@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import type { PropsWithChildren } from "~/@types/utils";
 
 import { Background } from "~/components/background";
 import { Providers } from "~/components/providers";

@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 import { email, object, string } from "valibot";
+import type { PropsWithOptionalChildren } from "~/@types/utils";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import { Dialog } from "./ui/dialog";
