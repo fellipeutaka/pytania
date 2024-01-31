@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { wrap } from "@decs/typeschema";
 import { eq } from "drizzle-orm";
-import { string, uuid } from "valibot";
+import { object, string, uuid } from "valibot";
 import { quizzes } from "~/lib/db/schema/quiz";
 import { createQuizSchema } from "../dtos/quiz";
 import { protectedProcedure, publicProcedure, router } from "../server";
@@ -19,12 +19,12 @@ export const quizRouter = router({
       .from(quizzes);
   }),
   findUnique: publicProcedure
-    .input(wrap(string([uuid()])))
-    .query(async ({ input, ctx: { db } }) => {
+    .input(wrap(object({ id: string([uuid()]) })))
+    .query(async ({ input: { id }, ctx: { db } }) => {
       return await db
         .select()
         .from(quizzes)
-        .where(eq(quizzes.id, input))
+        .where(eq(quizzes.id, id))
         .then((res) => res.at(0) ?? null);
     }),
   create: protectedProcedure

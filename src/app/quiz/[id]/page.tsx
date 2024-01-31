@@ -10,7 +10,7 @@ type PageProps = {
 };
 
 export default async function Page({ params: { id } }: PageProps) {
-  const quiz = await api.quiz.findUnique.query(id);
+  const quiz = await api.quiz.findUnique.query({ id });
   if (!quiz) notFound();
 
   return (
