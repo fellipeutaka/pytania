@@ -3,7 +3,7 @@ import Link from "next/link";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { Icons } from "~/components/icons";
 import { Button } from "~/components/ui/button";
-import { helpers } from "~/lib/api/server";
+import { helpers } from "~/lib/api/helpers";
 import { QuizList } from "./quiz-list";
 
 export const revalidate = 30;

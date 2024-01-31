@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "~/hooks/use-session";
 import type { api } from "~/lib/api/server";
 import { QuizActions } from "./quiz-actions";
 
@@ -9,7 +8,7 @@ type QuizInteractionsProps = {
 };
 
 export function QuizInteractions({ quiz }: QuizInteractionsProps) {
-  const { session } = useSession();
+  // const { session } = useSession();
 
   return (
     <QuizActions

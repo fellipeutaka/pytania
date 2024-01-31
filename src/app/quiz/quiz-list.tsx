@@ -4,11 +4,11 @@ import Link from "next/link";
 import { api } from "~/lib/api/client";
 
 export function QuizList() {
-  const [data] = api.quiz.findMany.useSuspenseQuery();
+  const { data } = api.quiz.findMany.useQuery();
 
   return (
     <div className="grid grid-cols-1 gap-6 motion-safe:animate-fade-right motion-safe:animate-delay-75 md:grid-cols-2 xl:grid-cols-3">
-      {data.map((quiz) => (
+      {data?.map((quiz) => (
         <Link
           className="group flex max-h-72 flex-col items-start gap-4 rounded-lg border p-6 transition-colors hover:border-cyan-8 select-none"
           href={`/quiz/${quiz.id}`}

@@ -1,4 +1,3 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth, { type DefaultSession } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
@@ -7,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { env } from "~/lib/env/index.mjs";
 
 import { db } from "../db";
+import { DrizzleAdapter } from "./drizzle";
 
 declare module "next-auth" {
   interface Session {

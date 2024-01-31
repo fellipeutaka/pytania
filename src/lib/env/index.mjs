@@ -11,7 +11,6 @@ export const env = createEnv({
     RESEND_API_KEY: string([minLength(1)]),
 
     NEXTAUTH_SECRET: string([minLength(1)]),
-    NEXTAUTH_URL: string([url()]),
 
     DISCORD_CLIENT_ID: string([minLength(1)]),
     DISCORD_CLIENT_SECRET: string([minLength(1)]),

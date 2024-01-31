@@ -8,7 +8,7 @@ import { protectedProcedure, publicProcedure, router } from "../server";
 
 export const quizRouter = router({
   findMany: publicProcedure.query(async ({ ctx: { db } }) => {
-    const data = await db
+    return await db
       .select({
         id: quizzes.id,
         name: quizzes.name,
@@ -16,11 +16,7 @@ export const quizRouter = router({
         creatorId: quizzes.creatorId,
         createdAt: quizzes.createdAt,
       })
-      .from(quizzes)
-      .execute();
-
-    console.log(data);
-    return data;
+      .from(quizzes);
   }),
   findUnique: publicProcedure
     .input(wrap(string([uuid()])))
@@ -29,29 +25,25 @@ export const quizRouter = router({
         .select()
         .from(quizzes)
         .where(eq(quizzes.id, input))
-        .execute()
         .then((res) => res.at(0) ?? null);
     }),
   create: protectedProcedure
     .input(wrap(createQuizSchema))
     .mutation(async ({ input, ctx: { session, db } }) => {
       const { name, description, questions } = input;
-      await db
-        .insert(quizzes)
-        .values({
-          name,
-          description,
-          creatorId: session.user.id,
-          questions: questions.map((question) => ({
-            ...question,
+      await db.insert(quizzes).values({
+        name,
+        description,
+        creatorId: session.user.id,
+        questions: questions.map((question) => ({
+          ...question,
+          id: randomUUID(),
+          answers: question.answers.map((answer) => ({
+            ...answer,
             id: randomUUID(),
-            answers: question.answers.map((answer) => ({
-              ...answer,
-              id: randomUUID(),
-            })),
           })),
-        })
-        .execute();
+        })),
+      });
     }),
 });
 

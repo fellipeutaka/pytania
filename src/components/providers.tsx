@@ -7,7 +7,6 @@ import { api } from "~/lib/api/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
-import { SuperJSON } from "superjson";
 import type { PropsWithChildren } from "~/@types/utils";
 import { getApiUrl } from "~/utils";
 import { Toaster } from "./ui/toast";
@@ -19,6 +18,7 @@ export function Providers({ children }: PropsWithChildren) {
         defaultOptions: {
           queries: {
             staleTime: 30 * 1000,
+            refetchOnMount: false,
           },
         },
       }),
@@ -30,7 +30,6 @@ export function Providers({ children }: PropsWithChildren) {
           url: getApiUrl(),
         }),
       ],
-      transformer: SuperJSON,
     }),
   );
 
