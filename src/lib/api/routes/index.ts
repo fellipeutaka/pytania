@@ -1,4 +1,4 @@
-import { router } from "../server";
+import { router } from "..";
 import { quizRouter } from "./quiz";
 import { submissionRouter } from "./submission";
 

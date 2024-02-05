@@ -13,7 +13,7 @@ export default async function Page({ params }: PageProps) {
   const submission = await api.submission.findUnique.query(params.id);
   if (!submission) notFound();
 
-  const quiz = await api.quiz.findUnique.query(submission.quizId);
+  const quiz = await api.quiz.findUnique.query({ id: submission.quizId });
 
   const question = quiz?.questions.find(
     ({ id }) => id === submission.questionId,

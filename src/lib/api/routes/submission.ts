@@ -2,8 +2,8 @@ import { wrap } from "@decs/typeschema";
 import { eq } from "drizzle-orm";
 import { string, uuid } from "valibot";
 import { submissions } from "~/lib/db/schema/quiz";
+import { protectedProcedure, publicProcedure, router } from "..";
 import { createSubmissionSchema } from "../dtos/submission";
-import { protectedProcedure, publicProcedure, router } from "../server";
 
 export const submissionRouter = router({
   findUnique: publicProcedure

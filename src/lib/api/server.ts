@@ -1,48 +1,23 @@
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import { TRPCError, initTRPC } from "@trpc/server";
+import { experimental_nextCacheLink } from "@trpc/next/app-dir/links/nextCache";
+import { experimental_createTRPCNextAppDirServer } from "@trpc/next/app-dir/server";
+import { headers } from "next/headers";
 
-import type { AppRouter } from "./routes";
+import { type AppRouter, appRouter } from "./routes";
 
-import { getApiUrl } from "~/utils";
-import type { createTRPCContext } from "./context";
+import { createTRPCContext } from "./context";
 
-const t = initTRPC.context<typeof createTRPCContext>().create();
-
-export const router = t.router;
-
-/**
- * Public (unauthenticated) procedure
- *
- * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
- * guarantee that a user querying is authorized, but you can still access user session data if they
- * are logged in.
- */
-export const publicProcedure = t.procedure;
-
-/**
- * Protected (authenticated) procedure
- *
- * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
- * the session is valid and guarantees `ctx.session.user` is not null.
- *
- * @see https://trpc.io/docs/procedures
- */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
-  if (!ctx.session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session },
-    },
-  });
-});
-
-export const api = createTRPCClient<AppRouter>({
-  links: [
-    httpBatchLink({
-      url: getApiUrl(),
-    }),
-  ],
+export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
+  config() {
+    return {
+      links: [
+        experimental_nextCacheLink({
+          router: appRouter,
+          createContext: () =>
+            createTRPCContext({
+              headers: headers(),
+            }),
+        }),
+      ],
+    };
+  },
 });

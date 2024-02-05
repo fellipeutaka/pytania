@@ -3,8 +3,8 @@ import { wrap } from "@decs/typeschema";
 import { eq } from "drizzle-orm";
 import { object, string, uuid } from "valibot";
 import { quizzes } from "~/lib/db/schema/quiz";
+import { protectedProcedure, publicProcedure, router } from "..";
 import { createQuizSchema } from "../dtos/quiz";
-import { protectedProcedure, publicProcedure, router } from "../server";
 
 export const quizRouter = router({
   findMany: publicProcedure.query(async ({ ctx: { db } }) => {
